@@ -1,0 +1,13 @@
+.c-Item {
+	min-width: 0;
+	flex: 0 0
+		calc(
+			(
+					100% -
+						(
+							var(--gap) *
+								(var(--slide-size, var(--slides-per-view)) - 1)
+						)
+				) / var(--slide-size, var(--slides-per-view))
+		);
+}
