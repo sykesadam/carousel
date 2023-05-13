@@ -2,7 +2,7 @@ import "../../Wrapper.css"
 import { CSSProperties, ElementType, forwardRef, useState } from "react"
 
 import {
-	Carousel as ICarousel,
+	ICarousel,
 	PolymorphicComponentPropWithRef,
 	PolymorphicRef,
 } from "../../types"
@@ -17,25 +17,19 @@ const DEFAULT_ELEMENT = "div"
 export type CarouselProps<T extends ElementType> =
 	PolymorphicComponentPropWithRef<T, ICarousel>
 export type CarouselComponent = <
-	C extends ElementType = typeof DEFAULT_ELEMENT
+	T extends ElementType = typeof DEFAULT_ELEMENT
 >(
-	props: CarouselProps<C>
+	props: CarouselProps<T>
 ) => React.ReactElement | null
 
-// @ts-ignore
-const Carousel: CarouselComponent & {
-	Item: typeof Item
-	Content: typeof Content
-	NextButton: typeof NextButton
-	PrevButton: typeof PrevButton
-	Pagination: typeof Pagination
-} = forwardRef(
+const CarouselRoot: CarouselComponent = forwardRef(
 	<T extends ElementType = typeof DEFAULT_ELEMENT>(
 		{
 			as,
+			totalSlides,
 			children,
 			className,
-			autoplay = false,
+			autoplay,
 			loop = false,
 			gap = 0,
 			style,
@@ -50,24 +44,26 @@ const Carousel: CarouselComponent & {
 
 		const handleSlideChange = (slideIndex: number) => {
 			const slides = document.querySelectorAll(`.c-Item`)
-
 			const targetIndex = Math.max(
 				0,
 				Math.min(slides.length - 1, slideIndex)
 			)
-			setCurrentSlide(targetIndex)
+
+			console.log("target", targetIndex)
+
 			slides[targetIndex]?.scrollIntoView({
 				behavior: "smooth",
-				block: "start",
+				block: "nearest",
 				inline: "start",
 			})
-
+			setCurrentSlide(targetIndex)
 			if (onSlideChange) onSlideChange(targetIndex, slides[targetIndex])
 		}
 
 		return (
 			<CarouselContext.Provider
 				value={{
+					totalSlides,
 					autoplay,
 					loop,
 					gap,
@@ -85,7 +81,9 @@ const Carousel: CarouselComponent & {
 							"--slides-per-view": slidesPerView,
 						} as CSSProperties
 					}
-					className={`c-CarouselWrapper ${className || ""}`}
+					className={
+						"c-CarouselWrapper" + (className ? ` ${className}` : "")
+					}
 					ref={ref}
 				>
 					{children}
@@ -95,10 +93,12 @@ const Carousel: CarouselComponent & {
 	}
 )
 
-Carousel.Item = Item
-Carousel.Content = Content
-Carousel.NextButton = NextButton
-Carousel.PrevButton = PrevButton
-Carousel.Pagination = Pagination
+const Carousel = Object.assign(CarouselRoot, {
+	Item,
+	Content,
+	PrevButton,
+	NextButton,
+	Pagination,
+})
 
 export default Carousel

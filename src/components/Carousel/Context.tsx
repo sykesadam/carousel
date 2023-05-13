@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react"
 
-import { Carousel } from "../../types"
+import { ICarousel } from "../../types"
 
 type CarouselFunctionality = {
 	currentSlide: number
@@ -8,7 +8,7 @@ type CarouselFunctionality = {
 }
 
 const CarouselContext = createContext<
-	(Carousel & CarouselFunctionality) | null
+	(ICarousel & CarouselFunctionality) | null
 >(null)
 
 export function useCarouselContext() {

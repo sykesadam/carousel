@@ -10,4 +10,5 @@
 						)
 				) / var(--slide-size, var(--slides-per-view))
 		);
+	scroll-snap-align: start;
 }

@@ -5,10 +5,12 @@ function App() {
 	return (
 		<>
 			<Carousel
+				autoplay={1500}
+				totalSlides={4}
 				gap={16}
 				slidesPerView={2}
-				onSlideChange={(slide, target) =>
-					console.log("test", slide, target)
+				onSlideChange={(targetSlideIndex, targetSlide) =>
+					console.log("test", targetSlideIndex, targetSlide)
 				}
 			>
 				<div className="c-Navigation">
