@@ -1,11 +1,12 @@
-import "./App.css"
-import Carousel from "./components/Carousel"
+import Carousel from "./components/Carousel";
+
+import "@/styles/App.css";
 
 function App() {
 	return (
 		<>
 			<Carousel
-				autoplay={1500}
+				// autoplay={1500}
 				totalSlides={4}
 				gap={16}
 				slidesPerView={2}
@@ -58,7 +59,7 @@ function App() {
 				</Carousel.Content>
 			</Carousel>
 		</>
-	)
+	);
 }
 
-export default App
+export default App;

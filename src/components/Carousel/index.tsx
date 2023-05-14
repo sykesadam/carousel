@@ -1,26 +1,26 @@
-import "../../Wrapper.css"
-import { CSSProperties, ElementType, forwardRef, useState } from "react"
-
+import { CSSProperties, ElementType, forwardRef, useState } from "react";
 import {
 	ICarousel,
 	PolymorphicComponentPropWithRef,
 	PolymorphicRef,
-} from "../../types"
-import Content from "./Content"
-import CarouselContext from "./Context"
-import Item from "./Item"
-import { NextButton, PrevButton } from "./Navigation"
-import Pagination from "./Pagination"
+} from "@/types";
+import Content from "./Content";
+import CarouselContext from "./Context";
+import Item from "./Item";
+import { NextButton, PrevButton } from "./Navigation";
+import Pagination from "./Pagination";
 
-const DEFAULT_ELEMENT = "div"
+import "@/styles/Wrapper.css";
+
+const DEFAULT_ELEMENT = "div";
 
 export type CarouselProps<T extends ElementType> =
-	PolymorphicComponentPropWithRef<T, ICarousel>
+	PolymorphicComponentPropWithRef<T, ICarousel>;
 export type CarouselComponent = <
 	T extends ElementType = typeof DEFAULT_ELEMENT
 >(
 	props: CarouselProps<T>
-) => React.ReactElement | null
+) => React.ReactElement | null;
 
 const CarouselRoot: CarouselComponent = forwardRef(
 	<T extends ElementType = typeof DEFAULT_ELEMENT>(
@@ -39,26 +39,26 @@ const CarouselRoot: CarouselComponent = forwardRef(
 		}: CarouselProps<T>,
 		ref?: PolymorphicRef<T>
 	) => {
-		const [currentSlide, setCurrentSlide] = useState(0)
-		const Component = as || DEFAULT_ELEMENT
+		const [currentSlide, setCurrentSlide] = useState(0);
+		const Component = as || DEFAULT_ELEMENT;
 
 		const handleSlideChange = (slideIndex: number) => {
-			const slides = document.querySelectorAll(`.c-Item`)
+			const slides = document.querySelectorAll(`.c-Item`);
 			const targetIndex = Math.max(
 				0,
 				Math.min(slides.length - 1, slideIndex)
-			)
+			);
 
-			console.log("target", targetIndex)
+			console.log("target", targetIndex);
 
 			slides[targetIndex]?.scrollIntoView({
 				behavior: "smooth",
 				block: "nearest",
 				inline: "start",
-			})
-			setCurrentSlide(targetIndex)
-			if (onSlideChange) onSlideChange(targetIndex, slides[targetIndex])
-		}
+			});
+			setCurrentSlide(targetIndex);
+			if (onSlideChange) onSlideChange(targetIndex, slides[targetIndex]);
+		};
 
 		return (
 			<CarouselContext.Provider
@@ -89,9 +89,9 @@ const CarouselRoot: CarouselComponent = forwardRef(
 					{children}
 				</Component>
 			</CarouselContext.Provider>
-		)
+		);
 	}
-)
+);
 
 const Carousel = Object.assign(CarouselRoot, {
 	Item,
@@ -99,6 +99,6 @@ const Carousel = Object.assign(CarouselRoot, {
 	PrevButton,
 	NextButton,
 	Pagination,
-})
+});
 
-export default Carousel
+export default Carousel;

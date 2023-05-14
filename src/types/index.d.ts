@@ -1,28 +1,28 @@
 export type AsProp<C extends React.ElementType> = {
-	as?: C
-}
+	as?: C;
+};
 
-export type PropsToOmit<C extends React.ElementType, P> = keyof (AsProp<C> & P)
+export type PropsToOmit<C extends React.ElementType, P> = keyof (AsProp<C> & P);
 
 export type PolymorphicComponentProp<
 	C extends React.ElementType,
 	Props = {}
 > = React.PropsWithChildren<Props & AsProp<C>> &
-	Omit<React.ComponentPropsWithoutRef<C>, PropsToOmit<C, Props>>
+	Omit<React.ComponentPropsWithoutRef<C>, PropsToOmit<C, Props>>;
 
 export type PolymorphicComponentPropWithRef<
 	C extends React.ElementType,
 	Props = {}
-> = PolymorphicComponentProp<C, Props> & { ref?: PolymorphicRef<C> }
+> = PolymorphicComponentProp<C, Props> & { ref?: PolymorphicRef<C> };
 
 export type PolymorphicRef<C extends React.ElementType> =
-	React.ComponentPropsWithRef<C>["ref"]
+	React.ComponentPropsWithRef<C>["ref"];
 
 export type ICarousel = {
-	totalSlides: number
-	gap?: number
-	slidesPerView?: number
-	autoplay?: number
-	loop?: boolean
-	onSlideChange?: (targetSlideIndex: number, targetSlide: Element) => void
-}
+	totalSlides: number;
+	gap?: number;
+	slidesPerView?: number;
+	autoplay?: number;
+	loop?: boolean;
+	onSlideChange?: (targetSlideIndex: number, targetSlide: Element) => void;
+};

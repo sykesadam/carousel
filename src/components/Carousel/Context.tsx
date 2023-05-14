@@ -1,24 +1,23 @@
-import { createContext, useContext } from "react"
-
-import { ICarousel } from "../../types"
+import { createContext, useContext } from "react";
+import { ICarousel } from "@/types";
 
 type CarouselFunctionality = {
-	currentSlide: number
-	handleSlideChange: (slide: number) => void
-}
+	currentSlide: number;
+	handleSlideChange: (slide: number) => void;
+};
 
 const CarouselContext = createContext<
 	(ICarousel & CarouselFunctionality) | null
->(null)
+>(null);
 
 export function useCarouselContext() {
-	const context = useContext(CarouselContext)
+	const context = useContext(CarouselContext);
 	if (!context) {
 		throw new Error(
 			"Carousel.* component must be rendered as child of Carousel component"
-		)
+		);
 	}
-	return context
+	return context;
 }
 
-export default CarouselContext
+export default CarouselContext;

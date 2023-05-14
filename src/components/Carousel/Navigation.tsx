@@ -1,17 +1,18 @@
-import { ButtonHTMLAttributes, ReactNode } from "react"
+import { ButtonHTMLAttributes } from "react";
+import { useCarouselContext } from "./Context";
 
-import { useCarouselContext } from "./Context"
+export const PrevButton = ({
+	className,
+	children,
+	...props
+}: ButtonHTMLAttributes<HTMLButtonElement>) => {
+	const { currentSlide, handleSlideChange } = useCarouselContext();
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
+	console.log(currentSlide);
 
-export const PrevButton = ({ className, children, ...props }: ButtonProps) => {
-	const { currentSlide, handleSlideChange } = useCarouselContext()
+	const isDisabled = currentSlide === 0;
 
-	console.log(currentSlide)
-
-	const isDisabled = currentSlide === 0
-
-	console.log("disabled", isDisabled)
+	console.log("disabled", isDisabled);
 
 	return (
 		<button
@@ -26,18 +27,22 @@ export const PrevButton = ({ className, children, ...props }: ButtonProps) => {
 		>
 			{children}
 		</button>
-	)
-}
+	);
+};
 
-export const NextButton = ({ className, children, ...props }: ButtonProps) => {
+export const NextButton = ({
+	className,
+	children,
+	...props
+}: ButtonHTMLAttributes<HTMLButtonElement>) => {
 	const {
 		currentSlide,
 		handleSlideChange,
 		totalSlides,
 		slidesPerView = 1,
-	} = useCarouselContext()
+	} = useCarouselContext();
 
-	const isDisabled = currentSlide === totalSlides - slidesPerView + 1
+	const isDisabled = currentSlide === totalSlides - slidesPerView + 1;
 
 	return (
 		<button
@@ -52,5 +57,5 @@ export const NextButton = ({ className, children, ...props }: ButtonProps) => {
 		>
 			{children}
 		</button>
-	)
-}
+	);
+};

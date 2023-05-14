@@ -1,17 +1,17 @@
-import "../../Content.css"
-import { ElementType, useEffect, useRef } from "react"
+import { ElementType, useEffect, useRef } from "react";
+import { PolymorphicComponentPropWithRef, PolymorphicRef } from "@/types";
+import { useIntersectionObserver } from "@/hooks";
+import { useCarouselContext } from "./Context";
 
-import { useIntersectionObserver } from "../../hooks"
-import { PolymorphicComponentPropWithRef, PolymorphicRef } from "../../types"
-import { useCarouselContext } from "./Context"
+import "@/styles/Content.css";
 
-const DEFAULT_ELEMENT = "ol"
+const DEFAULT_ELEMENT = "ol";
 
 export type ContentProps<T extends ElementType> =
-	PolymorphicComponentPropWithRef<T>
+	PolymorphicComponentPropWithRef<T>;
 export type ContentComponent = <T extends ElementType = typeof DEFAULT_ELEMENT>(
 	props: ContentProps<T>
-) => React.ReactElement | null
+) => React.ReactElement | null;
 
 const Content: ContentComponent = <
 	T extends ElementType = typeof DEFAULT_ELEMENT
@@ -20,7 +20,7 @@ const Content: ContentComponent = <
 	children,
 	className,
 }: ContentProps<T>) => {
-	const Component = as || DEFAULT_ELEMENT
+	const Component = as || DEFAULT_ELEMENT;
 	const {
 		currentSlide,
 		handleSlideChange,
@@ -28,43 +28,43 @@ const Content: ContentComponent = <
 		slidesPerView = 1,
 		autoplay,
 		loop,
-	} = useCarouselContext()
-	const ref = useRef<PolymorphicRef<T>>(null)
-	const entry = useIntersectionObserver(ref, {})
-	const isVisible = !!entry?.isIntersecting
+	} = useCarouselContext();
+	const ref = useRef<PolymorphicRef<T>>(null);
+	const entry = useIntersectionObserver(ref, {});
+	const isVisible = !!entry?.isIntersecting;
 
 	// autoplay functionality
 	useEffect(() => {
-		if (!autoplay) return
+		if (!autoplay) return;
 
-		let interval: number | undefined = undefined
+		let interval: number | undefined = undefined;
 
 		if (isVisible) {
-			console.log("hej")
+			console.log("hej");
 
 			interval = setInterval(() => {
 				const slideTarget =
 					currentSlide + 1 <= totalSlides - slidesPerView + 1
 						? currentSlide + 1
-						: 0
+						: 0;
 
-				console.log(slideTarget)
-				handleSlideChange(slideTarget)
-			}, autoplay)
+				console.log(slideTarget);
+				handleSlideChange(slideTarget);
+			}, autoplay);
 		} else {
-			interval && clearInterval(interval)
+			interval && clearInterval(interval);
 		}
 
 		return () => {
-			if (interval) return clearInterval(interval)
-		}
-	}, [isVisible, currentSlide, totalSlides, slidesPerView])
+			if (interval) return clearInterval(interval);
+		};
+	}, [isVisible, currentSlide, totalSlides]);
 
 	return (
 		<Component ref={ref} className={`c-Content ${className || ""}`}>
 			{children}
 		</Component>
-	)
-}
+	);
+};
 
-export default Content
+export default Content;

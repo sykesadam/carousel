@@ -1,13 +1,13 @@
-import { useCarouselContext } from "./Context"
+import { useCarouselContext } from "./Context";
 
 const Pagination = () => {
-	const { slidesPerView } = useCarouselContext()
+	const { slidesPerView } = useCarouselContext();
 
 	return (
 		<nav>
 			<ol></ol>
 		</nav>
-	)
-}
+	);
+};
 
-export default Pagination
+export default Pagination;
